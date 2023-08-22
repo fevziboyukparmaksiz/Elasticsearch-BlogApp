@@ -20,7 +20,7 @@ namespace Elasticsearch.Web.Services
                 Title = model.Title,
                 Content = model.Content,
                 UserId = Guid.NewGuid(),
-                Tags = model.Tags.ToArray()
+                Tags = model.Tags.Split(",")
             };
 
             var isCreatedBlog = await _blogRepository.SaveAsync(newBlog);
