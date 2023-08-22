@@ -22,5 +22,27 @@ namespace Elasticsearch.Web.Repositories
             return newBlog;
 
         }
+
+        public async Task<List<Blog>> SearchAsync(string searchText)
+        {
+            var result = await _elasticsearchClient.SearchAsync<Blog>(s => s.Index(indexName).Size(1000)
+               .Query(q => q
+                   .Bool(b => b
+                       .Should(
+                       s => s.Match(m => m
+                           .Field(f => f.Content)
+                           .Query(searchText)),
+                       s => s.MatchBoolPrefix(p => p
+                           .Field(f => f.Title)
+                           .Query(searchText))))));
+
+
+            foreach (var hits in result.Hits) hits.Source.Id = hits.Id;
+
+            return result.Documents.ToList();
+
+
+
+        }
     }
 }

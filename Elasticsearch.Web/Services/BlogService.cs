@@ -28,5 +28,10 @@ namespace Elasticsearch.Web.Services
 
             return isCreatedBlog != null;
         }
+
+        public Task<List<Blog>> SearchAsync(string searchText)
+        {
+            return _blogRepository.SearchAsync(searchText);
+        }
     }
 }
