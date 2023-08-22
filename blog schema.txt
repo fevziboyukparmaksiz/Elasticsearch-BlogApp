@@ -1,0 +1,27 @@
+PUT blog
+{
+  "mappings": {
+    "properties": {
+      "title": {
+        "type": "text",
+        "fields": {
+          "keyword": {
+            "type": "keyword"
+          }
+        }
+      },
+      "content": {
+        "type": "text"
+      },
+      "user_id": {
+        "type": "text"
+      },
+      "tags": {
+        "type": "text"
+      },
+      "created": {
+        "type": "date"
+      }
+    }
+  }
+}
