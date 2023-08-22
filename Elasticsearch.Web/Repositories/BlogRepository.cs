@@ -37,6 +37,9 @@ namespace Elasticsearch.Web.Repositories
 						   .Field(f => f.Title)
 						   .Query(searchText));
 
+			Action<QueryDescriptor<Blog>> TagTerm = q => q.Term(t => t.Field(f => f.Tags).Value(searchText));
+
+
 			if (string.IsNullOrEmpty(searchText))
 			{
 				ListQuery.Add(matchAll);
@@ -45,6 +48,7 @@ namespace Elasticsearch.Web.Repositories
 			{
 				ListQuery.Add(matchContent);
 				ListQuery.Add(titleMatchBoolPrefix);
+				ListQuery.Add(TagTerm);
 			}
 
 			var result = await _elasticsearchClient.SearchAsync<Blog>(s => s.Index(indexName).Size(1000)
