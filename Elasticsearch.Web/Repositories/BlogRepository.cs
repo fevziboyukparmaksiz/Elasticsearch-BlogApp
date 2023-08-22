@@ -25,6 +25,7 @@ namespace Elasticsearch.Web.Repositories
 
         public async Task<List<Blog>> SearchAsync(string searchText)
         {
+
             var result = await _elasticsearchClient.SearchAsync<Blog>(s => s.Index(indexName).Size(1000)
                .Query(q => q
                    .Bool(b => b
@@ -40,8 +41,6 @@ namespace Elasticsearch.Web.Repositories
             foreach (var hits in result.Hits) hits.Source.Id = hits.Id;
 
             return result.Documents.ToList();
-
-
 
         }
     }
